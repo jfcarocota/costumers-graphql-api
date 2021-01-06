@@ -6,6 +6,7 @@ const {GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList}  = graphql;
 
 const ParcelType = new GraphQLObjectType({
     name: 'Parcel',
+    deleted: {type: GraphQLString},
     fields: ()=>({
         id:{type: GraphQLID},
         name: {type: GraphQLString}

@@ -1,4 +1,4 @@
-import graphql, { GraphQLList } from 'graphql';
+import graphql from 'graphql';
 import CostumerType from './CostumerType.js';
 import Costumer from '../models/Costumer.js';
 import RoleType from './RoleType.js';
@@ -12,12 +12,12 @@ import Package from '../models/Package.js';
 import Parcel from '../models/Parcel.js';
 import ParcelType from './ParcelType.js';
 
-const {GraphQLObjectType, GraphQLString, GraphQLID, GraphQLFloat}  = graphql;
-
+const {GraphQLObjectType, GraphQLString, GraphQLID, GraphQLFloat, GraphQLList}  = graphql;
 
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields:{
+        // Costumers
         addCostumer: {
             type: CostumerType,
             args: {
@@ -29,10 +29,37 @@ const Mutation = new GraphQLObjectType({
                 email: {type: GraphQLString}
             },
             resolve(parent, args){
-                const costumer = new Costumer(args);
+                const costumer = new Costumer(args, { deleted: null } );
                 return costumer.save();
             }
         },
+        editCostumer: {
+            type: CostumerType,
+            args: {
+                id: {type: GraphQLID},
+                firstName: {type: GraphQLString},
+                middleName: {type: GraphQLString},
+                lastName: {type: GraphQLString},
+                secondLastName: {type: GraphQLString},
+                phonNumber: {type: GraphQLString},
+                email: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                return Costumer.findByIdAndUpdate(args.id, args);
+            }
+        },
+        hideCostumer: {
+            type: CostumerType,
+            args: {
+                id: {type: GraphQLID}
+            },
+            resolve(parent, args){
+                return Costumer.findByIdAndUpdate(args.id, {deleted:"yes"});
+            }
+        },
+
+
+        // Packages
         addPackage:{
             type: PackageType,
             args: {
@@ -42,20 +69,65 @@ const Mutation = new GraphQLObjectType({
                 parcelId: {type: GraphQLID}
             },
             resolve(parent, args){
-                const packager = new Package(args);
+                const packager = new Package(args, { deleted: null});
                 return packager.save();
             }
         },
+        editPackage: {
+            type: PackageType,
+            args: {
+                id: {type: GraphQLID},
+                account: {type: GraphQLString},
+                password: {type: GraphQLString},
+                costumerId: {type: GraphQLID},
+                parcelId: {type: GraphQLID}
+            },
+            resolve(parent, args){
+                return Package.findByIdAndUpdate(args.id, args);
+            }
+        },
+        hidePackage: {
+            type: PackageType,
+            args: {
+                id: {type: GraphQLID}
+            },
+            resolve(parent, args){
+                return Package.findByIdAndUpdate(args.id, {deleted:"yes"});
+            }
+        },
+        
+        // Parcels
         addParcel: {
             type : ParcelType,
             args: {
-                name: {type: GraphQLString},
+                name: {type: GraphQLString}
             },
             resolve(parent, args){
-                const parcel = new Parcel(args);
+                const parcel = new Parcel(args, { deleted: null});
                 return parcel.save();
             }
         },
+        editParcel: {
+            type: ParcelType,
+            args: {
+                id: {type: GraphQLID},
+                name: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                return Parcel.findByIdAndUpdate(args.id, args);
+            }
+        },
+        hideParcel: {
+            type: ParcelType,
+            args: {
+                id: {type: GraphQLID}
+            },
+            resolve(parent, args){
+                return Parcel.findByIdAndUpdate(args.id, {deleted:"yes"});
+            }
+        },
+
+        // Roles
         addRole: {
             type: RoleType,
             args: {
@@ -78,6 +150,8 @@ const Mutation = new GraphQLObjectType({
                 return Role.findByIdAndUpdate(args.id, args);
             }
         },
+
+        // Permissions
         addPermission: {
             type: PermissionType,
             args: {
@@ -88,6 +162,18 @@ const Mutation = new GraphQLObjectType({
                 return permission.save(); 
             }
         },
+        editPermission: {
+            type: PermissionType,
+            args: {
+                id: {type: GraphQLID},
+                name: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                return Permission.findByIdAndUpdate(args.id, args);
+            }
+        },
+
+        // Users
         addUser: {
             type: UserType,
             args: {
@@ -96,7 +182,7 @@ const Mutation = new GraphQLObjectType({
                 roleId: {type: GraphQLID}
             },
             resolve(parent, args){
-                let user = new User(args);
+                let user = new User(args, { deleted: null});
                 return user.save();
             }
         },
@@ -111,7 +197,16 @@ const Mutation = new GraphQLObjectType({
             resolve(parent, args){
                 return User.findOneAndUpdate(args.roleId, args);
             }
-        }
+        },
+        hideUser: {
+            type: UserType,
+            args: {
+                id: {type: GraphQLID}
+            },
+            resolve(parent, args){
+                return User.findByIdAndUpdate(args.id, {deleted:"yes"});
+            }
+        },
     }
 });
 

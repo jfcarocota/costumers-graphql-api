@@ -8,7 +8,8 @@ const CostumerSchema = new Schema({
     lastName: String,
     secondLastName: String,
     phonNumber: String,
-    email: String
+    email: String,
+    deleted: String
 });
 
 export default mongoose.model('Costumer', CostumerSchema);
