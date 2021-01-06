@@ -70,7 +70,7 @@ const Mutation = new GraphQLObjectType({
                 parcelId: {type: GraphQLID}
             },
             resolve(parent, args){
-                const packager = new Package(args, { deleted: null});
+                const packager = new Package(args);
                 return packager.save();
             }
         },
@@ -104,7 +104,7 @@ const Mutation = new GraphQLObjectType({
                 name: {type: GraphQLString}
             },
             resolve(parent, args){
-                const parcel = new Parcel(args, { deleted: null});
+                const parcel = new Parcel(args);
                 return parcel.save();
             }
         },
@@ -183,7 +183,7 @@ const Mutation = new GraphQLObjectType({
                 roleId: {type: GraphQLID}
             },
             resolve(parent, args){
-                let user = new User(args, { deleted: null});
+                let user = new User(args);
                 return user.save();
             }
         },
