@@ -14,6 +14,7 @@ const CostumerType = new GraphQLObjectType({
         secondLastName: {type: GraphQLString},
         phonNumber: {type: GraphQLString},
         email: {type: GraphQLString},
+        deleted: {type: GraphQLString},
         packages: {
             type: new GraphQLList(PackageType),
             resolve(parent, args){

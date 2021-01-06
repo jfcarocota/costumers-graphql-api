@@ -11,6 +11,7 @@ const PackageType = new GraphQLObjectType({
         account: {type: GraphQLString},
         password: {type: GraphQLString},
         costumerId: {type: GraphQLID},
+        deleted: {type: GraphQLString},
         parcel: {
             type: ParcelType,
             resolve(parent, args){

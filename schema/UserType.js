@@ -1,4 +1,4 @@
-import graphql, { GraphQLList } from 'graphql';
+import graphql from 'graphql';
 import RoleType from './RoleType.js';
 import Role from '../models/Role.js';
 
@@ -10,6 +10,7 @@ const UserType = new GraphQLObjectType({
         id:{type: GraphQLID},
         email: {type: GraphQLString},
         password: {type: GraphQLString},
+        deleted: {type: GraphQLString},
         role: {
             type: RoleType,
             resolve(parent, args){
