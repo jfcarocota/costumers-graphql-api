@@ -7,6 +7,7 @@ const CostumerSchema = new Schema({
     middleName: String,
     lastName: String,
     secondLastName: String,
+    fullName: String,
     phonNumber: String,
     email: String,
     deleted: String

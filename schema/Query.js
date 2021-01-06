@@ -36,13 +36,10 @@ const Query = new GraphQLObjectType({
         costumersSearch: {
             type: new GraphQLList(CostumerType),
             args: {
-                firstName: {type: GraphQLString},
-                middleName: {type: GraphQLString},
-                lastName: {type: GraphQLString},
-                secondLastName: {type: GraphQLString}
+                fullName: {type: GraphQLString}
             },
             resolve(parent, args){
-                return Costumer.find(args);
+                return Costumer.find( { fullName: {$regex: args.fullName} } );      // Búsqueda en formate where like
             }
         },
 

@@ -12,6 +12,7 @@ const CostumerType = new GraphQLObjectType({
         middleName: {type: GraphQLString},
         lastName: {type: GraphQLString},
         secondLastName: {type: GraphQLString},
+        fullName: {type: GraphQLString},
         phonNumber: {type: GraphQLString},
         email: {type: GraphQLString},
         deleted: {type: GraphQLString},
