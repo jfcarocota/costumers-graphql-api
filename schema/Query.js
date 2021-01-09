@@ -122,6 +122,15 @@ const Query = new GraphQLObjectType({
                 return User.find( {deleted: null} );
             }
         },
+        usersSearch: {
+            type: new GraphQLList(UserType),
+            args: {
+                email: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                return User.find( { email: args.email} );      // Búsqueda en formate where like
+            }
+        },
 
         // Login
         login: {
