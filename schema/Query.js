@@ -74,6 +74,15 @@ const Query = new GraphQLObjectType({
                 return Parcel.find( {deleted: null} );
             }
         },
+        parcelByName: {
+            type: ParcelType,
+            args: {
+                name: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                return Parcel.findOne( { name: args.name } );   // Formato where like que acepta caracteres especiales
+            }
+        },
 
         // Roles
         role: {
@@ -88,6 +97,15 @@ const Query = new GraphQLObjectType({
             type: new GraphQLList(RoleType),
             resolve(parent, args){
                 return Role.find();
+            }
+        },
+        roleByName: {
+            type: RoleType,
+            args: {
+                name: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                return Role.findOne( { name: args.name } );   // Formato where like que acepta caracteres especiales
             }
         },
 
@@ -128,7 +146,16 @@ const Query = new GraphQLObjectType({
                 email: {type: GraphQLString}
             },
             resolve(parent, args){
-                return User.find( { email: args.email} );      // Búsqueda en formate where like
+                return User.find( { email: {$regex: escape(args.email) } } );   // Formato where like que acepta caracteres especiales
+            }
+        },
+        userByEmail: {
+            type: UserType,
+            args: {
+                email: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                return User.findOne( { email: escape(args.email) } );   // Formato where like que acepta caracteres especiales
             }
         },
 
@@ -141,7 +168,7 @@ const Query = new GraphQLObjectType({
             },
             resolve(parent, args){
                 const user = User.findOne(args);   
-                return user;        
+                return user;
             }
         }
     }
