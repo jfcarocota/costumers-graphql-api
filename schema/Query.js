@@ -42,6 +42,7 @@ const Query = new GraphQLObjectType({
                 return Costumer.find({ $or: [
                     {fullName: {$regex: args.filter, $options: 'i'}},
                     {email: {$regex: args.filter, $options: 'i'}},
+                    {phonNumber: {$regex: args.filter, $options: 'i'}},
                 ]});      // Búsqueda en formate where like
             }
         },
