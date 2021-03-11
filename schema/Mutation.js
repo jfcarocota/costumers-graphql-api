@@ -2,7 +2,7 @@ import graphql from 'graphql';
 import CostumerType from './CostumerType.js';
 import Costumer from '../models/Costumer.js';
 import RoleType from './RoleType.js';
-import Role from '../models/Role.js'; 
+import Role from '../models/Role.js';
 import PermissionType from './PermissionType.js';
 import Permission from '../models/Permission.js';
 import UserType from './UserType.js';
@@ -41,6 +41,7 @@ const Mutation = new GraphQLObjectType({
                 firstName: {type: GraphQLString},
                 middleName: {type: GraphQLString},
                 lastName: {type: GraphQLString},
+                fullName: {type: GraphQLString},
                 secondLastName: {type: GraphQLString},
                 phonNumber: {type: GraphQLString},
                 email: {type: GraphQLString}
@@ -96,7 +97,6 @@ const Mutation = new GraphQLObjectType({
                 return Package.findByIdAndUpdate(args.id, {deleted:"yes"});
             }
         },
-        
         // Parcels
         addParcel: {
             type : ParcelType,
@@ -160,7 +160,7 @@ const Mutation = new GraphQLObjectType({
             },
             resolve(parent, args){
                 let permission = new Permission(args);
-                return permission.save(); 
+                return permission.save();
             }
         },
         editPermission: {

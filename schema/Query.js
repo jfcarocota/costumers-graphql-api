@@ -33,13 +33,22 @@ const Query = new GraphQLObjectType({
                 return Costumer.find( {deleted: null} );
             }
         },
-        costumersSearch: {
+        /*costumersSearch: {
             type: new GraphQLList(CostumerType),
             args: {
                 fullName: {type: GraphQLString}
             },
             resolve(parent, args){
                 return Costumer.find( { fullName: {$regex: args.fullName} } );      // Búsqueda en formate where like
+            }
+        },*/
+        costumersSearch: {
+            type: new GraphQLList(CostumerType),
+            args: {
+                fullName: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                return Costumer.find( { fullName: {$regex: args.fullName, $options: 'i'} } );      // Búsqueda en formate where like
             }
         },
 
