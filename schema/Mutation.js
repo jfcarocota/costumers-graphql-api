@@ -43,6 +43,7 @@ const Mutation = new GraphQLObjectType({
                 lastName: {type: GraphQLString},
                 fullName: {type: GraphQLString},
                 secondLastName: {type: GraphQLString},
+                fullName: {type: GraphQLString},
                 phonNumber: {type: GraphQLString},
                 email: {type: GraphQLString}
             },
@@ -196,7 +197,7 @@ const Mutation = new GraphQLObjectType({
                 roleId: {type: GraphQLID}
             },
             resolve(parent, args){
-                return User.findOneAndUpdate(args.roleId, args);
+                return User.findOneAndUpdate(args.id, args);
             }
         },
         hideUser: {
