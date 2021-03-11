@@ -27,28 +27,22 @@ const Query = new GraphQLObjectType({
                 return Costumer.findById(id);
             }
         },
-        costumers: { 
+        costumers: {
             type: new GraphQLList(CostumerType),
             resolve(parent, args){
                 return Costumer.find( {deleted: null} );
             }
         },
-        /*costumersSearch: {
-            type: new GraphQLList(CostumerType),
-            args: {
-                fullName: {type: GraphQLString}
-            },
-            resolve(parent, args){
-                return Costumer.find( { fullName: {$regex: args.fullName} } );      // Búsqueda en formate where like
-            }
-        },*/
         costumersSearch: {
             type: new GraphQLList(CostumerType),
             args: {
-                fullName: {type: GraphQLString}
+                filter: {type: GraphQLString}
             },
             resolve(parent, args){
-                return Costumer.find( { fullName: {$regex: args.fullName, $options: 'i'} } );      // Búsqueda en formate where like
+                return Costumer.find({ $or: [
+                    {fullName: {$regex: args.filter, $options: 'i'}},
+                    {email: {$regex: args.filter, $options: 'i'}},
+                ]});      // Búsqueda en formate where like
             }
         },
 
