@@ -95,7 +95,7 @@ const Query = new GraphQLObjectType({
             resolve(parent, args){
                 const {id} = args;
                 return Role.findById(id);
-            } 
+            }
         },
         roles: {
             type: new GraphQLList(RoleType),

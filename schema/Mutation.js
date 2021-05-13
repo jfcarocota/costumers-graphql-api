@@ -197,7 +197,7 @@ const Mutation = new GraphQLObjectType({
                 roleId: {type: GraphQLID}
             },
             resolve(parent, args){
-                return User.findOneAndUpdate(args.id, args);
+                return User.findByIdAndUpdate(args.id, args);
             }
         },
         hideUser: {
