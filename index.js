@@ -17,7 +17,7 @@ const {graphqlHTTP} = expressgraphql;
 app.use(cors())
 
 
-const connectionString = `mongodb://${process.env.DB_SERVER}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const connectionString = `mongodb+srv://${process.env.DB_USER}:${process.env.ACCOUNT_PASSWORD}${process.env.DB_SERVER}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
 .then(()=> console.log('connected'))
@@ -47,4 +47,4 @@ app.use('/graphql', graphqlHTTP({
     graphiql: true
 }));
 
-app.listen(process.env.SERVER_PORT, console.log(`listening at: http://localhost:${process.env.SERVER_PORT}/graphql`));
+app.listen(process.env.SERVER_PORT, console.log(`listening at: http://localhost:${process.env.PORT || process.env.SERVER_PORT}/graphql`));
