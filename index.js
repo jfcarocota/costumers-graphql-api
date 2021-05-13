@@ -47,4 +47,4 @@ app.use('/graphql', graphqlHTTP({
     graphiql: true
 }));
 
-app.listen(process.env.SERVER_PORT, console.log(`listening at: http://localhost:${process.env.PORT || process.env.SERVER_PORT}/graphql`));
+app.listen(process.env.PORT, console.log(`listening at: http://${process.env.HOST}:${process.env.PORT}/graphql`));
